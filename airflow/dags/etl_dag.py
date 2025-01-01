@@ -6,7 +6,6 @@ from airflow.operators.bash import BashOperator
 from airflow.providers.docker.operators.docker import DockerOperator
 import subprocess
 from dotenv import load_dotenv
-import os
 
 env_path = "../../.env"
 load_dotenv(env_path)
