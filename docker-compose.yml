@@ -5,7 +5,7 @@ services:
     ports:
       - "5434:5432"
     networks:
-      - elt_network
+      - etl_network
     environment:
       POSTGRES_DB: destination_db
       POSTGRES_USER: postgres
@@ -16,7 +16,7 @@ services:
   init-airflow:
     image: apache/airflow:latest
     networks:
-      - elt_network
+      - etl_network
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     command: >
@@ -26,7 +26,7 @@ services:
   postgres:
     image: postgres:15.1
     networks:
-      - elt_network
+      - etl_network
     depends_on:
       - init-airflow
     restart: unless-stopped
@@ -43,13 +43,13 @@ services:
     depends_on:
       - postgres
     networks:
-      - elt_network
+      - etl_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
     volumes:
       - ./airflow/dags:/opt/airflow/dags
-      - ./elt:/opt/airflow/elt
+      - ./etl:/opt/airflow/etl
       - ./raw-data:/app/raw-data
       - ./custom_ad_data:/dbt
       - ~/.dbt:/root
@@ -74,13 +74,13 @@ services:
     depends_on:
       - postgres
     networks:
-      - elt_network
+      - etl_network
     extra_hosts:
       - "host.docker.internal:host-gateway"
     restart: unless-stopped
     volumes:
       - ./airflow/dags:/opt/airflow/dags
-      - ./elt:/opt/airflow/elt
+      - ./etl:/opt/airflow/etl
       - ./raw-data:/app/raw-data
       - ./custom_ad_data:/dbt
       - ~/.dbt:/root
@@ -92,5 +92,5 @@ services:
     command: scheduler
 
 networks:
-  elt_network:
+  etl_network:
     driver: bridge

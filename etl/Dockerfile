@@ -3,7 +3,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 COPY requirements.txt .
-COPY elt_script.py .
+COPY etl_script.py .
 
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -12,4 +12,4 @@ RUN apt-get update && apt-get install -y \
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "elt_script.py"]
+CMD ["python", "etl_script.py"]

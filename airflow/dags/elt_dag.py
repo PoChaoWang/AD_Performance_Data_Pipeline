@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedetla
 from airflow import DAG
 from docker.types import Mount
 from airflow.operators.python import PythonOperator
@@ -18,17 +18,17 @@ default_args = {
     'email_on_retry': False,
     }
 
-def run_elt_script():
-    script_path = "/opt/airflow/elt/elt_script.py"
+def run_etl_script():
+    script_path = "/opt/airflow/etl/etl_script.py"
     result = subprocess.run(["python", script_path], capture_output=True, text=True)
 
     if result.returncode != 0:
-        raise Exception(f"ELT script failed with error:\n{result.stderr}")
+        raise Exception(f"etl script failed with error:\n{result.stderr}")
     else:
         print(result.stdout)
 
 dag = DAG(
-    'elt_and_dbt',
+    'etl_and_dbt',
     default_args=default_args,
     description='Extract, Transform, Load (ETL) and Data Transformation Tool (DBT) pipeline',
     start_date=datetime(2024,12,31),
@@ -37,8 +37,8 @@ dag = DAG(
     )
 
 task1 = PythonOperator(
-    task_id='run_elt_script',
-    python_callable=run_elt_script,
+    task_id='run_etl_script',
+    python_callable=run_etl_script,
     dag=dag,
 )
 
