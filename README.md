@@ -79,4 +79,88 @@ docker --version
 
 ### ETL Script
 
-The file path: elt
+The file path: etl/etl_script.py
+
+**1. 數據庫連接設定**
+請根據您的實際數據庫設置在 def main() 函數中修改以下數據庫連接參數：
+
+```
+db_params = {
+        'host': 'host.docker.internal  ',
+        'database': 'destination_db',
+        'user': 'postgres',
+        'password': 'password',
+        'port': '5434'
+    }
+```
+
+**2. 數據檔案路徑結構**
+本專案的實驗數據是放在以下結構裡，例如：raw-dat/ga/ga_fake_data_20241221.csv
+
+```
+raw-data/
+    ├── ga/
+    │   └── ga_fake_data_*.csv
+    ├── facebook/
+    │   └── facebook_fake_data_*.csv
+    ├── google/
+    │   └── google_fake_data_*.csv
+    ├── yahoo/
+    │   └── yahoo_fake_data_*.csv
+    └── criteo/
+        └── criteo_fake_data_*.csv
+```
+
+建議 platform 之後的結構不要做修改，只要修改 def main()裡的 base_path
+
+```
+base_path = 'raw-data'
+```
+
+**3. 自動 CSV 格式**
+
+- 在 def **init**(self, dest_conn_string)的 table_configs 可添加你的心資料
+
+```
+'new_platform': {
+    'table_name': 'new_platform_data',
+    'schema': '''
+        your_custom_schema_here
+    ''',
+    "primary_keys": ["your_primary_keys"],
+    "update_columns": ["your_update_columns"]
+}
+```
+
+- 確保您的 CSV 檔案放在正確的目錄：
+
+```
+raw-data/
+    └── new_platform/
+        └── new_platform_fake_data_*.csv
+```
+
+- 因為大多的測試檔案是用日期、活動、廣告群組作為 Primary Key，如果有特殊需求請在 def process_platform_data(self, files, platform)使用 else if
+
+```
+        if platform == 'ga':
+            combined_df = combined_df.drop_duplicates(
+                subset=['day', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content']
+            )
+        else if plaform == 'new platform'
+            combined_df = combined_df.drop_duplicates(
+                subset=['your column']
+            )
+        else:
+            combined_df = combined_df.drop_duplicates(
+                subset=['day', 'campaign', 'adgroup']
+            )
+```
+
+### DBT
+
+### Airflow
+
+### Docker
+
+## 專案背景
