@@ -13,12 +13,26 @@ services:
     volumes:
       - ./destination_db_data:/var/lib/postgresql/data
 
+  dbt:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.9.0
+    platform: linux/amd64
+    networks:
+      - etl_network
+    volumes:
+      - ~/.dbt:/root
+      - ./custom_ad_data:/dbt
+    environment:
+      DBT_PROFILE: custom_ad_data
+      DBT_TARGET: dev
+
   init-airflow:
     image: apache/airflow:latest
     networks:
       - etl_network
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+    depends_on:
+      - dbt
     command: >
       bash -c "airflow db init &&
       airflow users create --username airflow --password password --firstname pochao --lastname wang --role Admin --email admin@postgres"
