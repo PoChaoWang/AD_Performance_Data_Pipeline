@@ -3,4 +3,4 @@ destination_db_data/
 logs/
 .env
 zzz-docker-compose.yml
-image/
+image2/
