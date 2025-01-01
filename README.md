@@ -1,11 +1,12 @@
 # Ad Performance Data Pipeline
 
-## 專案簡介
+## Project Introduction
 
-此專案是我第一次嘗試實現資料流程與自動化，為了避免浪費您的時間，我將詳細的專案背景放在最後。
-因為廣告平台的 API 需要公司資訊，但本專案只是我自己個人的專案，所以無法實現串接各大廣告後台的 API 數據，一切資料皆為使用 Chat GPT 創造的模擬數據。
+This project is my first attempt at implementing data flow and automation. To avoid wasting your time, I put project background at the end.
 
-### 此專案為廣告成效數據處理管線,主要功能包含:
+Since the advertising platform APIs require company information and this project is purely personal, I was unable to integrate the APIs of major advertising platforms. All the data used in this project is simulated data created using Chat GPT.
+
+### This project is an advertising performance data processing pipeline, with its main functions including:
 
 1. Use Python to merge CSV files from a specified folder and remove duplicates.
 2. Insert the processed data into a PostgreSQL database.
@@ -15,24 +16,24 @@
 
 ![image](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/blob/main/images/process.png)
 
-### 此專案目的:
+### Project Objective:
 
-- 降低人工處理數據的時間成本
-- 進行跨平台成效比較分析
-- 優化廣告投放策略
+- Reduce the time cost of manual data processing.
+- Conduct cross-platform performance comparison and analysis.
+- Optimize advertising placement strategies.
 
-### 技術架構:
+### Technical Architecture:
 
-- 程式語言: Python 3.9.6
-- 資料處理: Pandas
-- 資料儲存: PostgreSQL, SQLAlchemy
-- 資料庫連接: psycopg2
-- 檔案處理: os, glob
-- 時間處理: datetime
-- 排程工具: Apache Airflow
-- 容器化部署: Docker 27.4.0
+- Programming Language: Python 3.9.6
+- Data Processing: Pandas
+- Data Storage: PostgreSQL, SQLAlchemy
+- Database Connection: psycopg2
+- File Handling: os, glob
+- Time Management: datetime
+- Scheduling Tool: Apache Airflow
+- Containerization and Deployment: Docker 27.4.0
 
-## 安裝說明
+## Installation Instructions:
 
 ### Installing Docker
 
@@ -81,8 +82,8 @@ docker --version
 
 The file path: etl/etl_script.py
 
-**1. 數據庫連接設定**
-請根據您的實際數據庫設置在 def main() 函數中修改以下數據庫連接參數：
+**1. Database Connection Configuration**
+Please modify the following database connection parameters in the `def main()` function based on your actual database settings:
 
 ```
 db_params = {
@@ -94,8 +95,8 @@ db_params = {
     }
 ```
 
-**2. 數據檔案路徑結構**
-本專案的實驗數據是放在以下結構裡，例如：raw-dat/ga/ga_fake_data_20241221.csv
+**2. Data File Path Structure**
+The experimental data for this project is stored in the following structure, for example: raw-dat/ga/ga_fake_data_20241221.csv
 
 ```
 raw-data/
@@ -111,15 +112,15 @@ raw-data/
         └── criteo_fake_data_*.csv
 ```
 
-建議 platform 之後的結構不要做修改，只要修改 def main()裡的 base_path
+It is recommended not to modify the structure after "platform", only change the base_path in the `def main()` function.
 
 ```
 base_path = 'raw-data'
 ```
 
-**3. 自動 CSV 格式**
+**3. Custom CSV Format**
 
-- 在 def **init**(self, dest_conn_string)的 table_configs 可添加你的心資料
+- In the `def __init__(self, dest_conn_string)` method, you can add your own data to the table_configs.
 
 ```
 'new_platform': {
@@ -132,7 +133,7 @@ base_path = 'raw-data'
 }
 ```
 
-- 確保您的 CSV 檔案放在正確的目錄：
+- Ensure that your CSV file is placed in the correct directory:
 
 ```
 raw-data/
@@ -140,7 +141,7 @@ raw-data/
         └── new_platform_fake_data_*.csv
 ```
 
-- 因為大多的測試檔案是用日期、活動、廣告群組作為 Primary Key，如果有特殊需求請在 def process_platform_data(self, files, platform)使用 else if
+- Because most of the test files use date, campaign, and ad group as the primary key, if there are special requirements, please use `else if` in the `def process_platform_data(self, files, platform)` method.
 
 ```
         if platform == 'ga':
@@ -159,8 +160,119 @@ raw-data/
 
 ### DBT
 
+**1. custom_ad_data**
+If you have already installed dbt core, please add the relevant settings for the `custom_ad_data` project in the `.dbt/profiles.yml` file as follows:
+
+```
+custom_ad_data:
+  outputs:
+    dev:
+      dbname: destination_db
+      host: host.docker.internal
+      pass: password
+      port: 5434
+      schema: platform_data
+      threads: 1
+      type: postgres
+      user: postgres
+  target: dev
+```
+
+If you haven't installed dbt core yet, please use the following command to install it:
+
+```
+pip install dbt-core
+```
+
+**2. Staging**
+If you have custom CSV data that you are loading into a database, you can add its information to the `source.yml` file in the `staging` folder of your dbt project. Here's an example of how to do this:
+
+```
+- name: new_table
+description: "Your csv data"
+```
+
+Then, you need to clean up and organize the data in the `stg_yourData.sql` file. This file is responsible for transforming the raw data (from your CSV or other sources) into a standardized format, so it can be used effectively in the rest of your dbt models.
+
+```
+WITH source AS (
+    SELECT
+        *
+    FROM
+        {{ source(
+            'destination_db',
+            'your_csv_data'
+        ) }}
+),
+renamed AS (
+    SELECT
+        *
+    FROM
+        source
+)
+SELECT
+    *
+FROM
+    renamed
+```
+
+In the `schema.yml` file, you can define the metadata for your new data tables, as well as set up tests for specific fields. Here's an example of how to do both:
+
+```
+  - name: stg_yourData
+    description: "Your new data"
+    columns:
+      - name: day
+        description: "Date the data was driven"
+        tests:
+          - not_null
+      - name: campaign
+        description: "Campaign information"
+        tests:
+          - not_null
+      - name: adgroup
+        description: "Ad group information"
+        tests:
+          - not_null
+      - name: impressions
+        description: "Impressions"
+      - name: clicks
+        description: "Clicks"
+      - name: cost
+        description: "Cost"
+    tests:
+      - unique:
+          combination:
+            - day
+            - campaign
+            - adgroup
+```
+
+**2. Marts**
+The purpose of `marts` is for tables that require merging and additional calculations. They will ultimately be presented in PostgreSQL for direct use by users.
+
 ### Airflow
+
+You need to insert the absolute path of your own `custom_ad_data` folder in task2 of the `elt_dag.py` file.
+
+```
+Mount(source='/Users/pochaowang/Documents/Profile/ad_performance_data_pipeline/custom_ad_data', target='/dbt', type='bind')
+```
+
+Additionally, you also need to insert the absolute path of the `.dbt` directory.
+
+```
+Mount(source='/Users/pochaowang/.dbt',target='/root',type='bind')
+```
 
 ### Docker
 
-## 專案背景
+Once the above tools are set up, you can use the following command in the terminal within the main directory:
+
+```
+docker-compose up
+```
+
+## Project Background
+
+The purpose of this project was simply to learn how to implement data automation. When I first started working at a digital marketing agency, I spent a lot of time downloading and organizing data in order to create reports. At that time, I wanted to automate the tasks I had, but I didn't know how to proceed. It wasn't until I moved to another agency that I was exposed to some knowledge, which helped me understand how to achieve the goal I had back then. This also pushed me further toward developing skills in data engineering, which led to the birth of this project. I anticipate that others will face many challenges when using this project, so I’m very open to feedback and would greatly appreciate any suggestions.
