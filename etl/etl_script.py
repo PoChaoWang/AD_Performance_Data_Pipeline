@@ -212,14 +212,15 @@ class ETLPipeline:
                 print(f"Error loading data for {platform}: {e}")
 
 def main():
-    dest_conn = "postgresql://postgres:password@destination_postgres:5432/destination_db"
+    # dest_conn = "postgresql://postgres:password@destination_postgres:5432/destination_db"
     db_params = {
-        'host': 'destination_postgres',
+        'host': 'host.docker.internal',
         'database': 'destination_db',
         'user': 'postgres',
         'password': 'password',
-        'port': '5432'
+        'port': '5434'
     }
+    dest_conn = f"postgresql://{db_params['user']}:{db_params['password']}@{db_params['host']}:{db_params['port']}/{db_params['database']}"
     
     pipeline = ETLPipeline(dest_conn)
     pipeline.initialize_tables(db_params)
