@@ -1,19 +1,19 @@
 # Ad Performance Data Pipeline
 
 ## <ins>Catalog </ins>
-1. [Project Introduction](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-introduction)
-   - [Project Features](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
-   - [Project Objective](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
-   - [Technical Architecture](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
+1. [Project Introduction](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#project-introduction)
+   - [Project Features](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#project-features)
+   - [Project Objective](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#project-features)
+   - [Technical Architecture](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#project-features)
         
-2. [Installation Instructions](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#installation-instructions)
-   - [Installing Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
-   - [ETL Script](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#etl-script)
-   - [DBT](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#dbt)
-   - [Airflow](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#airflow)
-   - [Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#docker)
+2. [Installation Instructions](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#installation-instructions)
+   - [Installing Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#project-features)
+   - [ETL Script](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#etl-script)
+   - [DBT](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#dbt)
+   - [Airflow](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#airflow)
+   - [Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file#docker)
      
-3. [Project Background](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md##project-background)
+3. [Project Background](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline?tab=readme-ov-file##project-background)
    
 
 ## <ins>Project Introduction
