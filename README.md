@@ -1,12 +1,28 @@
 # Ad Performance Data Pipeline
 
-## Project Introduction
+## <ins>Catalog </ins>
+1. [Project Introduction](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-introduction)
+   - [Project Features](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
+   - [Project Objective](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
+   - [Technical Architecture](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
+        
+2. [Installation Instructions](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#installation-instructions)
+   - [Installing Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#project-features)
+   - [ETL Script](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#etl-script)
+   - [DBT](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#dbt)
+   - [Airflow](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#airflow)
+   - [Docker](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md#docker)
+     
+3. [Project Background](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/edit/main/README.md##project-background)
+   
 
-This project is my first attempt at implementing data flow and automation. To avoid wasting your time, I put project background at the end.
+## <ins>Project Introduction
+
+This project is my first attempt at implementing data flow and automation. To avoid wasting your time, I put the project background at the end.
 
 Since the advertising platform APIs require company information and this project is purely personal, I was unable to integrate the APIs of major advertising platforms. All the data used in this project is simulated data created using Chat GPT.
 
-### This project is an advertising performance data processing pipeline, with its main functions including:
+### Project Features
 
 1. Use Python to merge CSV files from a specified folder and remove duplicates.
 2. Insert the processed data into a PostgreSQL database.
@@ -14,11 +30,11 @@ Since the advertising platform APIs require company information and this project
 4. Schedule daily updates with Airflow.
 5. Package Airflow into Docker.
 
-![image](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/blob/main/images/process.png)
+![image](https://github.com/PoChaoWang/Ad_Performance_Data_Pipeline/blob/main/image/process.png)
 
 ### Project Objective:
 
-- Reduce the time cost of manual data processing.
+- Reduce the time and cost of manual data processing.
 - Conduct cross-platform performance comparison and analysis.
 - Optimize advertising placement strategies.
 
@@ -33,7 +49,8 @@ Since the advertising platform APIs require company information and this project
 - Scheduling Tool: Apache Airflow
 - Containerization and Deployment: Docker 27.4.0
 
-## Installation Instructions:
+
+## <ins>Installation Instructions </ins>
 
 ### Installing Docker
 
@@ -273,6 +290,7 @@ Once the above tools are set up, you can use the following command in the termin
 docker-compose up
 ```
 
-## Project Background
+
+## <ins>Project Background </ins>
 
 The purpose of this project was simply to learn how to implement data automation. When I first started working at a digital marketing agency, I spent a lot of time downloading and organizing data in order to create reports. At that time, I wanted to automate the tasks I had, but I didn't know how to proceed. It wasn't until I moved to another agency that I was exposed to some knowledge, which helped me understand how to achieve the goal I had back then. This also pushed me further toward developing skills in data engineering, which led to the birth of this project. I anticipate that others will face many challenges when using this project, so I’m very open to feedback and would greatly appreciate any suggestions.
