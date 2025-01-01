@@ -5,10 +5,6 @@ from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.providers.docker.operators.docker import DockerOperator
 import subprocess
-from dotenv import load_dotenv
-
-env_path = "../../.env"
-load_dotenv(env_path)
 
 default_args = {
     'owner': 'airflow',
